@@ -6,8 +6,10 @@ using UnityEditor;
 using System.IO;
 using SmartDLL;
 
-public class FileManager : MonoBehaviour
+public class Editor : MonoBehaviour
 {
+    public GameObject MenuPanel;
+
     public List<GameObject> objects;
     public string SaveFileName;
     public SmartFileExplorer fileExplorer = new SmartFileExplorer();
@@ -17,8 +19,19 @@ public class FileManager : MonoBehaviour
 
     private void Awake()
     {
+        MenuPanel.SetActive(false);
         //Default name if you don't choose the file name;
         SaveFileName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+    }
+
+    public void OpenMenuPanel()
+    {
+        MenuPanel.SetActive(true);
+    }
+
+    public void CloseMenuPanel()
+    {
+        MenuPanel.SetActive(false);
     }
 
     public void Save()
@@ -77,8 +90,8 @@ public class FileManager : MonoBehaviour
 
         if (fileExplorer.resultOK)
         {
-            LoadData();         
-        }    
+            LoadData();
+        }
     }
 
     private void LoadData()
@@ -106,9 +119,9 @@ public class FileManager : MonoBehaviour
 
         //Load Ojbects
         string[] lines = loadFile.Split('\n');
-        foreach(string line in lines)
+        foreach (string line in lines)
         {
-            if(line.Length != 0)
+            if (line.Length != 0)
             {
                 ObjectData objData = JsonUtility.FromJson<ObjectData>(line);
                 Debug.Log(line);
@@ -143,14 +156,14 @@ public class FileManager : MonoBehaviour
             default:
                 break;
         }
-        if(gameObject != null)
+        if (gameObject != null)
         {
             gameObject.name = objData.name;
             gameObject.transform.position = objData.position;
             gameObject.transform.rotation = Quaternion.Euler(objData.rotation);
             gameObject.transform.localScale = objData.scale;
         }
-
+        CloseMenuPanel();
     }
 
 }
