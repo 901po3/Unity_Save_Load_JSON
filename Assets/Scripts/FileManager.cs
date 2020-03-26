@@ -8,13 +8,20 @@ using System.IO;
 public class FileManager : MonoBehaviour
 {
     public List<GameObject> objects;
+    public string SaveFileName;
 
     string path;
+
+    private void Awake()
+    {
+        //Default name if you don't choose the file name;
+        SaveFileName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+    }
 
     public void Save()
     {
         // 1. Create txt file 
-        path = Application.dataPath + '/' + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + ".txt";
+        path = Application.dataPath + '/' + SaveFileName + ".txt";
         File.WriteAllText(path, "");
 
         // 2. Get all gameobjects data
