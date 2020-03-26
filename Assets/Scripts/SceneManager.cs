@@ -19,7 +19,20 @@ public class SceneManager : MonoBehaviour
     {
         // 1. Create txt file 
         path = Application.dataPath + "/Scenes/" + SaveFileName + i + ".txt";
-        i++;
+
+        i = 0;
+        while (true)
+        {
+            if(File.Exists(path))
+            {
+                i++;
+                path = Application.dataPath + "/Scenes/" + SaveFileName + i + ".txt";
+            }
+            else
+            {
+                break;
+            }
+        }
         File.WriteAllText(path, "");
 
         // 2. Get all gameobjects data
