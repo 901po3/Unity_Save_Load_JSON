@@ -6,17 +6,20 @@ using SmartDLL;
 
 public class SceneManager : MonoBehaviour
 {
-    public List<GameObject> objects;
-    public string SaveFileName = "newSave";
-    public SmartFileExplorer fileExplorer = new SmartFileExplorer();
+    static public List<GameObject> objects  = new List<GameObject>();
+    static public string SaveFileName = "newSave";
+    static int i = 0;
+    static public SmartFileExplorer fileExplorer = new SmartFileExplorer();
 
-    string path;
-    string loadFile;
+    static string path;
+    static string loadFile;
 
-    public void Save()
+    [MenuItem("SceneManager/Save")]
+    public static void Save()
     {
         // 1. Create txt file 
-        path = Application.dataPath + "/Scenes/" + SaveFileName + ".txt";
+        path = Application.dataPath + "/Scenes/" + SaveFileName + i + ".txt";
+        i++;
         File.WriteAllText(path, "");
 
         // 2. Get all gameobjects data
@@ -46,12 +49,13 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    public void Load()
+    [MenuItem("SceneManager/Load")]
+    public static void Load()
     {
         ShowExplorer();
     }
 
-    private void ShowExplorer()
+    private static void ShowExplorer()
     {
         string initialDir = Application.dataPath + "/Scenes/";
         bool restoreDir = true;
@@ -73,7 +77,7 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    private void LoadData()
+    private static void LoadData()
     {
         // 1. destroy all gameobjects
         foreach (GameObject obj in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
@@ -109,7 +113,7 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    void LoadObject(ObjectData objData)
+    static void LoadObject(ObjectData objData)
     {
         GameObject gameObject = null;
 
