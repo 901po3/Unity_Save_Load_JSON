@@ -1,38 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEditor;
 using System.IO;
 using SmartDLL;
 
-public class Editor : MonoBehaviour
+public class SceneManager : MonoBehaviour
 {
-    public GameObject MenuPanel;
-
     public List<GameObject> objects;
-    public string SaveFileName;
+    public string SaveFileName = "newSave";
     public SmartFileExplorer fileExplorer = new SmartFileExplorer();
 
     string path;
     string loadFile;
-
-    private void Awake()
-    {
-        MenuPanel.SetActive(false);
-        //Default name if you don't choose the file name;
-        SaveFileName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-    }
-
-    public void OpenMenuPanel()
-    {
-        MenuPanel.SetActive(true);
-    }
-
-    public void CloseMenuPanel()
-    {
-        MenuPanel.SetActive(false);
-    }
 
     public void Save()
     {
@@ -163,7 +142,7 @@ public class Editor : MonoBehaviour
             gameObject.transform.rotation = Quaternion.Euler(objData.rotation);
             gameObject.transform.localScale = objData.scale;
         }
-        CloseMenuPanel();
+        //CloseMenuPanel();
     }
 
 }
