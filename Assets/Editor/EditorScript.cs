@@ -13,12 +13,13 @@ public class EditorScript : Editor
         if(GUILayout.Button("Save Scene"))
         {
             sceneManager.Save();
+            GUIUtility.ExitGUI();
         }
         
         if(GUILayout.Button("Load Scene"))
         {
             sceneManager.Load();
+            GUIUtility.ExitGUI();
         }
-
     }
 }

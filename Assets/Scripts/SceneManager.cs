@@ -31,7 +31,7 @@ public class SceneManager : MonoBehaviour
                 {
                     objects.Add(obj);
                     ObjectData tempData = new ObjectData();
-                    tempData.type = obj.GetComponent<MeshFilter>().mesh.name;
+                    tempData.type = obj.GetComponent<MeshFilter>().sharedMesh.name;
                     tempData.name = obj.name;
                     tempData.position = obj.transform.position;
                     tempData.scale = obj.transform.localScale;
@@ -80,7 +80,8 @@ public class SceneManager : MonoBehaviour
         {
             if (obj.GetComponent<MeshFilter>() != null)
             {
-                Destroy(obj);
+                DestroyImmediate(obj);
+                //Destroy(obj);
             }
         }
         objects.Clear();
@@ -92,7 +93,6 @@ public class SceneManager : MonoBehaviour
             using (StreamReader reader = new StreamReader(path))
             {
                 loadFile = reader.ReadToEnd();
-                Debug.Log(loadFile);
             }
         }
 
@@ -112,25 +112,32 @@ public class SceneManager : MonoBehaviour
     void LoadObject(ObjectData objData)
     {
         GameObject gameObject = null;
+
         switch (objData.type)
         {
             case "Cube Instance":
-                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Cube));
+            case "Cube":
+                gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 break;
             case "Cylinder Instance":
-                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Cylinder));
+            case "Cylinder":
+                gameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
                 break;
             case "Capsule Instance":
-                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Capsule));
+            case "Capsule":
+                gameObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
                 break;
             case "Sphere Instance":
-                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Sphere));
+            case "Sphere":
+                gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 break;
             case "Plane Instance":
-                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Plane));
+            case "Plane":
+                gameObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
                 break;
             case "Quad Instance":
-                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Quad));
+            case "Quad":
+                gameObject = GameObject.CreatePrimitive(PrimitiveType.Quad);
                 break;
             default:
                 break;
