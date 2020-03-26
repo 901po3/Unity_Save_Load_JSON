@@ -8,10 +8,6 @@ using System.IO;
 public class FileManager : MonoBehaviour
 {
     public List<GameObject> objects;
-    public List<string> names;
-    public List<Vector3> positions;
-    public List<Vector3> scales;
-    public List<Quaternion> rotations;
 
     string path;
 
@@ -23,13 +19,29 @@ public class FileManager : MonoBehaviour
 
         // 2. Get all gameobjects data
         objects.Clear();
-        foreach (GameObject obj in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+
+        FileStream fileStream = new FileStream(path, FileMode.Create);
+        using (StreamWriter writer = new StreamWriter(fileStream))
         {
-            objects.Add(obj);
-            names.Add(obj.GetType().ToString());
+            foreach (GameObject obj in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                if (obj.GetComponent<MeshFilter>() != null)
+                {
+                    objects.Add(obj);
+                    ObjectData tempData = new ObjectData();
+                    tempData.name = obj.name;
+                    tempData.type = obj.GetComponent<MeshFilter>().mesh;
+                    tempData.position = obj.transform.position;
+                    tempData.scale = obj.transform.localScale;
+                    tempData.rotation = obj.transform.rotation.eulerAngles;
+
+                    // 3. Parse datas to json and save them to file
+                    string data = JsonUtility.ToJson(tempData);
+                    writer.Write(data);
+                    writer.Write("\n");
+                }
+            }
         }
-
-
     }
 
     public void Load()
