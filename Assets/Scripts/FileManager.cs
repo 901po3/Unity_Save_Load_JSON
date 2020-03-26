@@ -39,8 +39,8 @@ public class FileManager : MonoBehaviour
                 {
                     objects.Add(obj);
                     ObjectData tempData = new ObjectData();
+                    tempData.type = obj.GetComponent<MeshFilter>().mesh.name;
                     tempData.name = obj.name;
-                    tempData.type = obj.GetComponent<MeshFilter>().mesh;
                     tempData.position = obj.transform.position;
                     tempData.scale = obj.transform.localScale;
                     tempData.rotation = obj.transform.rotation.eulerAngles;
@@ -75,16 +75,82 @@ public class FileManager : MonoBehaviour
         /// </summary>
         fileExplorer.OpenExplorer(initialDir, restoreDir, title, defExt, filter);
 
-        if(fileExplorer.resultOK)
+        if (fileExplorer.resultOK)
         {
-            ReadText(fileExplorer.fileName);
+            LoadData();         
+        }    
+    }
+
+    private void LoadData()
+    {
+        // 1. destroy all gameobjects
+        foreach (GameObject obj in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+        {
+            if (obj.GetComponent<MeshFilter>() != null)
+            {
+                Destroy(obj);
+            }
+        }
+        objects.Clear();
+
+        // 2. Read File to Json format
+        string path = fileExplorer.fileName;
+        if (File.Exists(path))
+        {
+            using (StreamReader reader = new StreamReader(path))
+            {
+                loadFile = reader.ReadToEnd();
+                Debug.Log(loadFile);
+            }
+        }
+
+        //Load Ojbects
+        string[] lines = loadFile.Split('\n');
+        foreach(string line in lines)
+        {
+            if(line.Length != 0)
+            {
+                ObjectData objData = JsonUtility.FromJson<ObjectData>(line);
+                Debug.Log(line);
+                LoadObject(objData);
+            }
         }
     }
 
-    private void ReadText(string path)
+    void LoadObject(ObjectData objData)
     {
-        Debug.Log(path);
-        loadFile = File.ReadAllText(path);
-        Debug.Log(loadFile);
+        GameObject gameObject = null;
+        switch (objData.type)
+        {
+            case "Cube Instance":
+                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Cube));
+                break;
+            case "Cylinder Instance":
+                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Cylinder));
+                break;
+            case "Capsule Instance":
+                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Capsule));
+                break;
+            case "Sphere Instance":
+                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Sphere));
+                break;
+            case "Plane Instance":
+                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Plane));
+                break;
+            case "Quad Instance":
+                gameObject = (GameObject.CreatePrimitive(PrimitiveType.Quad));
+                break;
+            default:
+                break;
+        }
+        if(gameObject != null)
+        {
+            gameObject.name = objData.name;
+            gameObject.transform.position = objData.position;
+            gameObject.transform.rotation = Quaternion.Euler(objData.rotation);
+            gameObject.transform.localScale = objData.scale;
+        }
+
     }
+
 }

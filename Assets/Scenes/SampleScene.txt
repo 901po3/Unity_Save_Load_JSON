@@ -1,5 +1,7 @@
-{"name":"Cube","type":{"instanceID":-42650},"position":{"x":0.0,"y":0.0,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":314.24542236328127,"y":-0.0000024472772111039378,"z":49.5446662902832}}
-{"name":"Cube (1)","type":{"instanceID":-42652},"position":{"x":3.869999885559082,"y":0.0,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":0.0,"y":0.0,"z":0.0}}
-{"name":"Cylinder","type":{"instanceID":-42654},"position":{"x":-2.809999942779541,"y":0.0,"z":2.390000104904175},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":0.0,"y":0.0,"z":0.0}}
-{"name":"Capsule","type":{"instanceID":-42656},"position":{"x":2.3399999141693117,"y":0.0,"z":2.9600000381469728},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":0.0,"y":0.0,"z":0.0}}
-{"name":"Sphere","type":{"instanceID":-42658},"position":{"x":0.0,"y":2.3499999046325685,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":0.0,"y":0.0,"z":0.0}}
+{"type":"Cube Instance","name":"Cube","position":{"x":0.0,"y":0.0,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":314.24542236328127,"y":-0.0000024472772111039378,"z":49.5446662902832}}
+{"type":"Cube Instance","name":"Cube (1)","position":{"x":3.869999885559082,"y":0.0,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":0.0,"y":0.0,"z":0.0}}
+{"type":"Cylinder Instance","name":"Cylinder","position":{"x":-2.809999942779541,"y":0.0,"z":2.390000104904175},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":0.0,"y":0.0,"z":0.0}}
+{"type":"Capsule Instance","name":"Capsule","position":{"x":2.3399999141693117,"y":0.0,"z":2.9600000381469728},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":0.0,"y":0.0,"z":0.0}}
+{"type":"Sphere Instance","name":"Sphere","position":{"x":0.0,"y":2.3499999046325685,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":0.0,"y":0.0,"z":0.0}}
+{"type":"Plane Instance","name":"Plane","position":{"x":0.0,"y":-1.2300000190734864,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":0.0,"y":0.0,"z":0.0}}
+{"type":"Quad Instance","name":"Quad","position":{"x":0.0,"y":4.579999923706055,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"rotation":{"x":0.0,"y":0.0,"z":0.0}}
