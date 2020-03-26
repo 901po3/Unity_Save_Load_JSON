@@ -4,13 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
 using System.IO;
+using SmartDLL;
 
 public class FileManager : MonoBehaviour
 {
     public List<GameObject> objects;
     public string SaveFileName;
+    public SmartFileExplorer fileExplorer = new SmartFileExplorer();
 
     string path;
+    string loadFile;
 
     private void Awake()
     {
@@ -21,7 +24,7 @@ public class FileManager : MonoBehaviour
     public void Save()
     {
         // 1. Create txt file 
-        path = Application.dataPath + '/' + SaveFileName + ".txt";
+        path = Application.dataPath + "/Scenes/" + SaveFileName + ".txt";
         File.WriteAllText(path, "");
 
         // 2. Get all gameobjects data
@@ -53,6 +56,35 @@ public class FileManager : MonoBehaviour
 
     public void Load()
     {
-        path = EditorUtility.OpenFolderPanel("Load Scene", "", "");
+        ShowExplorer();
+    }
+
+    private void ShowExplorer()
+    {
+        string initialDir = Application.dataPath + "/Scenes/";
+        bool restoreDir = true;
+        string title = "Open a Save Scene file";
+        string defExt = "txt";
+        string filter = "txt files (*.txt)|*.txt";
+
+        /// <summary>
+        /// --OpenExplorer--
+        /// Call this function for open explorer
+        /// In Unity Editor, It will throw 2 errors because form classed are not unregistered when Unity Editor Stops. 
+        /// But it won't throw any kind of error in Build.
+        /// </summary>
+        fileExplorer.OpenExplorer(initialDir, restoreDir, title, defExt, filter);
+
+        if(fileExplorer.resultOK)
+        {
+            ReadText(fileExplorer.fileName);
+        }
+    }
+
+    private void ReadText(string path)
+    {
+        Debug.Log(path);
+        loadFile = File.ReadAllText(path);
+        Debug.Log(loadFile);
     }
 }
